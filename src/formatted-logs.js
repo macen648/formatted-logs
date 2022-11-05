@@ -1,7 +1,9 @@
 // Custom Console logs ;)
 const dayjs = require('dayjs')
 const chalk = require('chalk')
+
 const colorNameToHex = require('./utils/colorNameToHex')
+const Paragraph = require('./utils/Paragraph')
 
 class FLog {
      /**
@@ -18,6 +20,7 @@ class FLog {
         this.options = options
         this.options.hide = false
         this.options.timeStruct = 'HH:mm:ss'
+        this.options.boxedLabels = false
     }
     /**
      * Add option(s) to options.
@@ -28,8 +31,19 @@ class FLog {
      */
     addOptions(options){
         this.options = { ...this.options, ...options }
-        return this
+        return this 
         
+    }
+
+    /**
+     * Set timeStamp structure.
+     * 
+     * @param {string} timeStruct TimeStruct
+     * @returns FLog
+     */
+    setTimeStruct(timeStruct){
+        this.options.timeStruct = timeStruct
+        return this
     }
 
     /**
@@ -125,6 +139,26 @@ class FLog {
         this.log()
         return this
     }
+    /**
+     * Logs a label.
+     * 
+     * @param {string} name 
+     * @param {string | object} color 
+     * @returns Flog
+     */
+    label(name, color) {
+        this.raw(this.createLabel(name, color))
+        return this
+    }
+    /**
+     * Start of a paragraph.
+     * 
+     * @param {string} name 
+     * @returns Paragraph
+     */
+    paragraph(name) {
+        return new Paragraph(this, name)
+    }
 
     /**
      * Log a console.Table() to the console with a timestamp. 
@@ -160,6 +194,7 @@ class FLog {
         for (const line of lines) console.log(`${' '.repeat(this.options.timeStruct.length + 1)}${line}`)
         return this
     }
+
     /**
      * Create a timestamp.
      * @returns TimeStamp as string
@@ -176,10 +211,12 @@ class FLog {
     createLabel(name, color){
         if (!name) name = ''
         if (!color) color = '#cccccc'
-        if (typeof color === 'object') return chalk.rgb(color.r, color.g, color.b)(`[${name}]`)
-        if (color.startsWith("#")) return chalk.hex(color)(`[${name}]`)
-        if (colorNameToHex(color) == false) return chalk.hex('#cccccc')(`[${name}]`)
-        return chalk.hex(colorNameToHex(color))(`[${name}]`)
+        var label = `${name}`
+        if (this.options.boxedLabels == true) label = `[${name}]`
+        if (typeof color === 'object') return chalk.rgb(color.r, color.g, color.b)(label)
+        if (color.startsWith("#")) return chalk.hex(color)(label)
+        if (colorNameToHex(color) == false) return chalk.hex('#cccccc')(label)
+        return chalk.hex(colorNameToHex(color))(label)
     }
 
     /**

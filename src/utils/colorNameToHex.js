@@ -26,3 +26,4 @@ const colorsToHex = {
 }
 
 module.exports = colorNameToHex = (color) => { return colorsToHex[color.toLowerCase()] ? colorsToHex[color.toLowerCase()] : false }
+

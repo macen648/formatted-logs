@@ -1,5 +1,4 @@
-// test
-const fLogs = require('../formatted-logs')
+const { FLogs: fLogs, Paragraph } = require('../index')
 const FLogs = new fLogs()
 
 //FLogs.log
@@ -91,6 +90,9 @@ FLogs.warn('This should be visible')
 FLogs.error('This should be visible')
 FLogs.newLine('This should be\nvisible')
 FLogs.table('This should be visible')
+FLogs.paragraph('This should be visible')
+    .header()
+    .body(`this is a body paragraph \nthis is another body paragraph`)
 FLogs.white()
 FLogs.timeStamp()
 //hide: true
@@ -103,10 +105,57 @@ FLogs.warn('This should be hidden')
 FLogs.error('This should be hidden')
 FLogs.newLine('This should be\nhidden')
 FLogs.table('This should be hidden')
+FLogs.paragraph('This should be hidden')
+    .header()
+    .body(`this is a body paragraph \nthis is another body paragraph`)
 FLogs.white()
 FLogs.timeStamp()
 FLogs.addOptions({ hide: false })
 FLogs.white()
+
+//BoxedLabels
+//boxedLabels: false
+FLogs.addOptions({ boxedLabels: false })
+FLogs.raw('noShow : FLogs.addOptions({ boxedLabels: false}):')
+FLogs.log('This should be hidden')
+FLogs.log('This should be hidden', 'Label', 'white')
+FLogs.raw('This should be hidden')
+FLogs.info('This should be hidden')
+FLogs.warn('This should be hidden')
+FLogs.error('This should be hidden')
+FLogs.newLine('This should be\nhidden')
+FLogs.table('This should be hidden')
+FLogs.paragraph('This should be hidden')
+    .label('white')
+    .header()
+    .body(`this is a body paragraph \nthis is another body paragraph`)
+FLogs.white()
+FLogs.timeStamp()
+//boxedLabels: true
+FLogs.raw('show : FLogs.addOptions({boxedLabels: true}):')
+FLogs.addOptions({ boxedLabels: true })
+FLogs.log('This should be visible')
+FLogs.log('This should be visible', 'Label', 'white')
+FLogs.raw('This should be visible')
+FLogs.info('This should be visible')
+FLogs.warn('This should be visible')
+FLogs.error('This should be visible')
+FLogs.newLine('This should be\nvisible')
+FLogs.table('This should be visible')
+FLogs.paragraph('This should be visible')
+    .label('white')
+    .header()
+    .body(`this is a body paragraph \nthis is another body paragraph`)
+
+
+
+
+FLogs.white()
+FLogs.timeStamp()
+FLogs.addOptions({ boxedLabels: false })
+FLogs.white()
+
+
 
 //TimeStruct
 FLogs.raw(`timeStruct : FLogs.addOptions({timeStruct: 'HH:mm:ss' }):`)
@@ -127,3 +176,58 @@ FLogs.log('1')
 .table('7')
 .white()
 .timeStamp()
+
+//label
+FLogs.label('label', 'red')
+FLogs.label('label')
+FLogs.label()
+
+FLogs.white()
+
+//paragraphs
+new Paragraph(FLogs, 'new Paragraph')
+    .header()
+    .body(`this is a body paragraph \nthis is another body paragraph`)
+    
+// new Paragraph('new Paragraph')
+//     .header()
+//     .body(`this is a body paragraph \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+     .header()
+     .body(`this is a body paragraph with Flogs \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+    .noTimeStamp()
+    .header()
+    .body(`no time stamp \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+    .header()
+    .body(`this is a body paragraph with Flogs \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+    .noTimeStamp()
+    .label()
+    .header()
+    .body(`no time stamp \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+    .label()
+    .header()
+    .body(`just label \nthis is another body paragraph`)
+
+FLogs.white()
+
+FLogs.paragraph('FLogs.paragraph')
+     .body(`just body \nthis is another body paragraph`)
