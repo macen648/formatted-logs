@@ -2,7 +2,7 @@
 Time-stamped and labeled Console.logs.
 
 ## Why?
-Flogs was built for my package [DCHandler.js](https://nodei.co/npm/dchandler)
+Flogs was built for my package [DCHandler.js](https://nodei.co/npm/dchandler.js)
 
 ## TimeStamp and label structure
 ```
@@ -21,15 +21,15 @@ or setTimeStruct("struct")
 ## Options
 - hide Default false
 - timeStruct Default 'HH:mm:ss'
-- boxedLabels Default false
+- boxedLabels Default true
 
 ## Simple examples
 ```js
 FLogs.log('just text')
-// HH:mm:ss message
+// HH:mm:ss just text
 
 FLogs.log('just text', 'Label', 'white')
-// HH:mm:ss [Label] message
+// HH:mm:ss [Label] just text
 
 FLogs.paragraph('FLogs.paragraph')
      .header()

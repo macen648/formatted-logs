@@ -20,7 +20,7 @@ class FLog {
         this.options = options
         this.options.hide = false
         this.options.timeStruct = 'HH:mm:ss'
-        this.options.boxedLabels = false
+        this.options.boxedLabels = true
     }
     /**
      * Add option(s) to options.
