@@ -1,0 +1,10 @@
+{
+  "name": "formatted-logs",
+  "version": "1.0.0",
+  "main": "formatted-logs.js",
+  "author": "macen <3",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "dayjs": "^1.11.6"
+  }
+}
