@@ -1,12 +1,13 @@
 {
   "name": "formatted-logs",
   "description": "Time-stamped and labeled Console.logs.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/macen648/formatted-logs"
-    },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/macen648/formatted-logs"
+  },
   "keywords": [
     "console",
     "log",
@@ -16,10 +17,10 @@
   ],
   "author": "macen <3",
   "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/macen648/formatted-logs/issues"
-    },
-    "homepage": "https://github.com/macen648/formatted-logs#README",
+  "bugs": {
+    "url": "https://github.com/macen648/formatted-logs/issues"
+  },
+  "homepage": "https://github.com/macen648/formatted-logs#README",
   "dependencies": {
     "chalk": "^4.1.1",
     "dayjs": "^1.11.6"

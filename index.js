@@ -1,5 +1,6 @@
 module.exports = {
-    FLogs: require('./src/formatted-logs'),
-    Paragraph: require('./src/utils/Paragraph'),
+    FLogs: require('./src/Formatted-Logs'),
+    Paragraph: require('./src/Paragraph'),
     colorNameToHex: require('./src/utils/colorNameToHex'),
+    splitNewLine: require('./src/utils/splitNewLine'),
 }

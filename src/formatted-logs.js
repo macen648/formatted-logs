@@ -1,11 +1,13 @@
 // Custom Console logs ;)
 const dayjs = require('dayjs')
 const chalk = require('chalk')
-
+const Paragraph = require('./Paragraph')
 const colorNameToHex = require('./utils/colorNameToHex')
-const Paragraph = require('./utils/Paragraph')
+const splitNewLine = require('./utils/splitNewLine')
 
-class FLog {
+
+
+class FLogs {
      /**
      * Time-stamped and labeled Console logs.
      * 
@@ -27,7 +29,7 @@ class FLog {
      *
      * @param {object | any} [options] Option(s)
      *
-     * @returns FLog
+     * @returns FLogs
      */
     addOptions(options){
         this.options = { ...this.options, ...options }
@@ -39,7 +41,7 @@ class FLog {
      * Set timeStamp structure.
      * 
      * @param {string} timeStruct TimeStruct
-     * @returns FLog
+     * @returns FLogs
      */
     setTimeStruct(timeStruct){
         this.options.timeStruct = timeStruct
@@ -56,22 +58,33 @@ class FLog {
      * @param {string} message Message
      * @param {string} [label] Label
      * @param {string | object} [color] Label-Color
-     * @returns FLog
+     * @returns FLogs
      */
     log(message, label, color){
         if (this.options.hide) return
         if (!message) message = ' '
-        const lines = this.splitNewLine(message)
+        const lines = splitNewLine(message)
         if (!label) for (const line of lines) console.log(`${this.createTimeStamp()} ${line}`)
         else for (const line of lines) console.log(`${this.createTimeStamp()} ${this.createLabel(label, color)} ${line}`)
         return this
     }
 
     /**
+     * Start of a paragraph.
+     * 
+     * @param {object} options 
+     * @returns Paragraph
+     */
+    paragraph(options) {
+        return new Paragraph(this, options)
+    }
+
+
+    /**
      * Log a message to the console without a timestamp and or label.
      * 
      * @param {string} message Message
-     * @returns FLog
+     * @returns FLogs
      */
     raw(message){
         if (this.options.hide) return
@@ -87,7 +100,7 @@ class FLog {
      * 
      *              white
      * @param {string} message Message
-     * @returns FLog
+     * @returns FLogs
      */
     info(message){
         this.log(message, 'INFO', 'white')
@@ -101,7 +114,7 @@ class FLog {
      * 
      *             yellow
      * @param {string} message Message
-     * @returns FLog
+     * @returns FLogs
      */
     warn(message){
         this.log(message, 'WARN', 'yellow')
@@ -115,7 +128,7 @@ class FLog {
      * 
      *              red
      * @param {string} message Message
-     * @returns FLog
+     * @returns FLogs
      */
     error(message){
         this.log(message, 'error', 'red')
@@ -124,7 +137,7 @@ class FLog {
 
     /**
      * Logs a blank line.
-     * @returns FLog
+     * @returns FLogs
      */
     white() {
         this.raw(" ")
@@ -132,40 +145,11 @@ class FLog {
     }
 
     /**
-     * Logs a timeStamp.
-     * @returns FLog
-     */
-    timeStamp() {
-        this.log()
-        return this
-    }
-    /**
-     * Logs a label.
-     * 
-     * @param {string} name 
-     * @param {string | object} color 
-     * @returns Flog
-     */
-    label(name, color) {
-        this.raw(this.createLabel(name, color))
-        return this
-    }
-    /**
-     * Start of a paragraph.
-     * 
-     * @param {string} name 
-     * @returns Paragraph
-     */
-    paragraph(name) {
-        return new Paragraph(this, name)
-    }
-
-    /**
      * Log a console.Table() to the console with a timestamp. 
      * 
      * @param {Array | string} values Array of values
      * @param {object} properties Properties 
-     * @returns FLog
+     * @returns FLogs
      */
     table(values = [], properties) {
         if (this.options.hide) return
@@ -178,6 +162,26 @@ class FLog {
     }
 
     /**
+     * Logs a timeStamp.
+     * @returns FLogs
+     */
+    timeStamp() {
+        this.log()
+        return this
+    }
+    /**
+     * Logs a label.
+     * 
+     * @param {string} name 
+     * @param {string | object} color 
+     * @returns FLogs
+     */
+    label(name, color) {
+        this.raw(this.createLabel(name, color))
+        return this
+    }
+
+    /**
      * Log a newLine with out a timestamp.
      * 
      * HH:mm:ss [INFO] Message
@@ -185,13 +189,19 @@ class FLog {
      *             NewLine
      *             messages
      * @param {string} message Message
-     * @returns FLog
+     * @returns FLogs
      */
-    newLine(message){
+    newLine(message, spacing){
+        var outSpacing = ''
         if (this.options.hide) return
-        if(!message) message = ' '
-        const lines = this.splitNewLine(message)
-        for (const line of lines) console.log(`${' '.repeat(this.options.timeStruct.length + 1)}${line}`)
+        if (!message) message = ' '
+        if (!spacing) outSpacing = ' '.repeat(this.options.timeStruct.length + 1)
+        if (spacing > 0) outSpacing = ' '.repeat(spacing)
+        if (spacing === 0) outSpacing = ''
+        
+
+        const lines = splitNewLine(message)
+        for (const line of lines) console.log(`${outSpacing}${line}`)
         return this
     }
 
@@ -219,16 +229,6 @@ class FLog {
         return chalk.hex(colorNameToHex(color))(label)
     }
 
-    /**
-     * 
-     * @param {string} message Message
-     * @returns Lines as Array 
-     */
-    splitNewLine(message) {
-        if(typeof message != 'string') return [message]
-        return message.trimEnd().split('\n')
-    }
-
 }
 
-module.exports = FLog
+module.exports = FLogs

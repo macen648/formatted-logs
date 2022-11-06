@@ -1,7 +1,10 @@
 const { FLogs: fLogs, Paragraph } = require('../index')
+const dayjs = require('dayjs')
+
 const FLogs = new fLogs()
 
-//FLogs.log
+
+// FLogs.log
 FLogs.log('Hex white', 't', '#ccc')
 FLogs.log('Text color white', 'c', 'white')
 FLogs.log('Text color red', 'r', 'red')
@@ -90,8 +93,8 @@ FLogs.warn('This should be visible')
 FLogs.error('This should be visible')
 FLogs.newLine('This should be\nvisible')
 FLogs.table('This should be visible')
-FLogs.paragraph('This should be visible')
-    .header()
+FLogs.paragraph()
+    .title('This should be visible')
     .body(`this is a body paragraph \nthis is another body paragraph`)
 FLogs.white()
 FLogs.timeStamp()
@@ -105,8 +108,8 @@ FLogs.warn('This should be hidden')
 FLogs.error('This should be hidden')
 FLogs.newLine('This should be\nhidden')
 FLogs.table('This should be hidden')
-FLogs.paragraph('This should be hidden')
-    .header()
+FLogs.paragraph()
+    .title('This should be hidden')
     .body(`this is a body paragraph \nthis is another body paragraph`)
 FLogs.white()
 FLogs.timeStamp()
@@ -125,9 +128,9 @@ FLogs.warn('This should be hidden')
 FLogs.error('This should be hidden')
 FLogs.newLine('This should be\nhidden')
 FLogs.table('This should be hidden')
-FLogs.paragraph('This should be hidden')
+FLogs.paragraph()
     .label('white')
-    .header()
+    .title('This should be hidden')
     .body(`this is a body paragraph \nthis is another body paragraph`)
 FLogs.white()
 FLogs.timeStamp()
@@ -142,9 +145,9 @@ FLogs.warn('This should be visible')
 FLogs.error('This should be visible')
 FLogs.newLine('This should be\nvisible')
 FLogs.table('This should be visible')
-FLogs.paragraph('This should be visible')
+FLogs.paragraph()
     .label('white')
-    .header()
+    .title('This should be visible')
     .body(`this is a body paragraph \nthis is another body paragraph`)
 
 
@@ -183,51 +186,3 @@ FLogs.label('label')
 FLogs.label()
 
 FLogs.white()
-
-//paragraphs
-new Paragraph(FLogs, 'new Paragraph')
-    .header()
-    .body(`this is a body paragraph \nthis is another body paragraph`)
-    
-// new Paragraph('new Paragraph')
-//     .header()
-//     .body(`this is a body paragraph \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-     .header()
-     .body(`this is a body paragraph with Flogs \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-    .noTimeStamp()
-    .header()
-    .body(`no time stamp \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-    .header()
-    .body(`this is a body paragraph with Flogs \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-    .noTimeStamp()
-    .label()
-    .header()
-    .body(`no time stamp \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-    .label()
-    .header()
-    .body(`just label \nthis is another body paragraph`)
-
-FLogs.white()
-
-FLogs.paragraph('FLogs.paragraph')
-     .body(`just body \nthis is another body paragraph`)
