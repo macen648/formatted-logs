@@ -1,3 +1,5 @@
+const Log = require('./Log')
+
 class Paragraph {
     /**
      * Create a new paragraph.

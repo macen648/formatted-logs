@@ -1,11 +1,10 @@
 // Custom Console logs ;)
 const dayjs = require('dayjs')
 const chalk = require('chalk')
+const Log = require('./Log')
 const Paragraph = require('./Paragraph')
 const colorNameToHex = require('./utils/colorNameToHex')
 const splitNewLine = require('./utils/splitNewLine')
-
-
 
 class FLogs {
      /**
