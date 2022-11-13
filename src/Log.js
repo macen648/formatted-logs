@@ -1,7 +1,6 @@
 // Custom Console logs ;)
 const dayjs = require('dayjs')
 const chalk = require('chalk')
-const Paragraph = require('./src/Paragraph')
 const colorNameToHex = require('./utils/colorNameToHex')
 const splitNewLine = require('./utils/splitNewLine')
 
@@ -42,6 +41,8 @@ class Log {
         this.options.boxedTimeStamp = false
         this.options.timeStampStructure = 'HH:mm:ss'
         this.options.timeStampTextColor = '#ccc'
+
+        this.options.newLineColor = '#ccc'
     }
 
     resetLogValues() {
@@ -212,25 +213,24 @@ class Log {
     //  * @param {string} message Message
     //  * @returns FLogs
     //  */
-    // newLine(message, spacing) {
-    //     var outSpacing = ''
-    //     if (this.options.hide) return
-    //     if (!message) message = ' '
-    //     if (!spacing) outSpacing = ' '.repeat(this.options.timeStruct.length + 1)
-    //     if (spacing > 0) outSpacing = ' '.repeat(spacing)
-    //     if (spacing === 0) outSpacing = ''
+
+    newLine(message, spacing) {
+        var outSpacing = ''
+        //if (this.options.hide) return
+        if (!message) message = ' '
+        if (!spacing) outSpacing = ' '.repeat(this.options.timeStampStructure.length + 1)
+        if (spacing > 0) outSpacing = ' '.repeat(spacing)
+        if (spacing === 0) outSpacing = ''
 
 
-    //     const lines = splitNewLine(message)
-    //     for (const line of lines) console.log(`${outSpacing}${line}`)
-    //     return this
-    // }
+        const lines = splitNewLine(message)
+        for (const line of lines) console.log(`${outSpacing}${this._getChalkColor(line, this.options.newLineColor)}`)
+        return this
+    }
 
-
-
-
-
-
+    newLineColor(color){
+        this.options.newLineColor = color
+    }
 
     _getChalkColor(string, color){ 
         if (!string) return 

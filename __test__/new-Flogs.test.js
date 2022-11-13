@@ -1,4 +1,4 @@
-const { FLogs, Paragraph } = require('../index')
+const { FLogs, FParagraph } = require('../index')
 
 // FLogs.log
 FLogs.log('Hex white', 't', '#ccc')

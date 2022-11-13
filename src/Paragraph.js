@@ -4,20 +4,42 @@ class Paragraph {
     /**
      * Create a new paragraph.
      * 
-     * @param {Flogs} FLogs FLogs
      * @param {string} name Title
      */
-    constructor(FLogs, options = {}) {
-        if (FLogs instanceof Object != true) throw new Error('Paragraph requires a FLogs instance.')
+    constructor(options = {}) {
+        this.options = {}
+       
+        this.setDefaults()
 
-        this.FLogs = FLogs
-        this.options = options
-        this.options.noTimeStamp = false
-        this.options.noIndent = false
-        this.labeled = false
-        this.Title = ''
-        this.Body = ''
-        this.Footer = ''
+        this.setOptions(options)
+        
+        this.Log = new Log(this.options)
+    }
+
+    setDefaults() {
+        this.options.timeStamp = true
+
+        this.options.titleColor = '#ccc'
+        this.options.boxedTitle = false
+
+        this.options.indent = true
+        this.options.bodyColor = '#ccc'
+
+        this.options.footerColor = '#ccc'
+        this.options.boxedFooter = false
+    }
+
+    resetValues() {
+        this.Title = ' '
+        this.options.titleColor = '#ccc'
+
+        this.Body = ' '
+        this.options.indent = true
+        this.options.bodyColor = '#ccc'
+
+        this.Footer = ' '
+        this.options.footerColor = '#ccc'
+        return this
     }
 
     /**
@@ -27,21 +49,10 @@ class Paragraph {
      *
      * @returns Paragraph
      */
-    addOptions(options) {
+    setOptions(options) {
         this.options = { ...this.options, ...options }
         return this
     }  
-    /**
-     * Toggles if header is a label.
-     * 
-     * @param {string | object} color Color
-     * @returns Paragraph
-     */
-    label(color){
-        this.labeled = true
-        this.labelColor = color
-        return this
-    }
 
     /**
      * Turns off timestamps.
@@ -49,16 +60,26 @@ class Paragraph {
      * @returns Paragraph
      */
     noTimeStamp(){ 
-        this.options.noTimeStamp = true
+        this.options.timeStamp = false
+        this.Log.noTimeStamp()
         return this 
     }
-    /**
-     * Turns off timestamp indent.
-     * 
-     * @returns Paragraph
-     */
-    noIndent(){ 
-        this.options.noIndent = true
+
+    timeStamp(){
+        this.options.timeStamp = true
+        this.Log.timeStamp()
+        return this
+    }
+
+    boxed(){
+        this.boxedTitle()
+        this.boxedFooter()
+        return this
+    }
+
+    noBoxed() {
+        this.noBoxedTitle()
+        this.noBoxedFooter()
         return this
     }
 
@@ -67,60 +88,115 @@ class Paragraph {
      * @param {string} title Title 
      * @returns Paragraph
      */
-    title(title) {
-        var title_out = ''
-        if (title){
-            title_out = title
-            this.Title = title
-        } 
-        if (this.labeled == true){
-            title_out = this.FLogs.createLabel(this.Title, this.labelColor)
-            this.Title = `[${title}]`
-        } 
-        if (this.options.noTimeStamp == true) this.FLogs.raw(title_out)
-        else this.FLogs.log(title_out)
+    title(title, color, boxed) {
+
+        if (title) this.Log.label(title).noBoxedLabel()
+         
+        if (color) this.colorTitle(color)
+        
+        if (boxed == true) this.boxedTitle()
+
+        if (this.options.boxedTitle == true) this.Log.boxedLabel()
+
+        this.Log.labelColor(this.options.titleColor)
+        this.Log.log()
+
+        this.resetValues()
         return this
     }
+
+    colorTitle(color){
+        this.options.titleColor = color
+        return this
+    }
+
+    boxedTitle() {
+        this.options.boxedTitle = true
+        return this
+    }
+
+    noBoxedTitle(){
+        this.options.boxedTitle = false
+        return this
+    }
+
     /**
      * The body of the paragraph.
      * 
      * @param {string} paragraph Paragraph
      * @returns Paragraph
      */
-    body(paragraph) {
-        var spacing = this.FLogs.options.timeStruct.length + 1
-        if (this.options.noTimeStamp == true) spacing = this.Title.length + 1
-        if (this.options.noIndent == true) spacing = 0
-        
-        this.FLogs.newLine(paragraph, spacing)
-        this.Body = paragraph
+    body(paragraph, color, indent){
+
+        if (color) this.options.bodyColor = color
+        if (indent == false ) this.options.indent = false
+
+        var spacing = this.Log.options.timeStampStructure.length + 1
+        if (this.options.timeStamp == false) spacing = this.Title.length + 1
+        if (this.options.indent == false) spacing = 0
+
+        this.Log.newLineColor(this.options.bodyColor)
+        if (paragraph) this.Log.newLine(paragraph, spacing)
+      
+        this.resetValues()
         return this
     }
+
+    colorBody(color){
+        this.options.bodyColor = color
+        return this
+    }
+
+    indent() {
+        this.options.indent = true
+        return this
+    }
+
+    noIndent() {
+        this.options.indent = false
+        return this
+    }
+
+
     /**
      * Footer of the paragraph.
      * @param {string} footer Footer title
      * @returns Paragraph
      */
-    footer(footer) {
-        var footer_out = ''
-        this.Footer = this.Title
-        if (footer){
-            footer_out = footer
-            this.Footer = footer
-        } else {
-            footer_out = this.Title
-            this.Footer = this.Title
-        } 
+    footer(footer, color, boxed) {
 
-        if (this.labeled == true && footer) {
-            footer_out = this.FLogs.createLabel(this.Footer, this.labelColor)
-            this.Footer = `[${footer}]`
-        } 
+        if (footer) this.Log.label(footer).noBoxedLabel()  
+    
+        if (color) this.footerColor(color)
 
-        if (this.options.noTimeStamp == true) this.FLogs.raw(footer_out)
-        else this.FLogs.log(footer_out)
+        if (boxed == true) this.boxedFooter()
+
+        if (this.options.boxedFooter == true) this.Log.boxedLabel()
+
+        this.Log.labelColor(this.options.footerColor)
+        this.Log.log()
+        this.resetValues()
         return this
     }
+
+
+    footerColor(color) {
+        this.options.footerColor = color
+        return this
+    }
+
+    boxedFooter() {
+        this.options.boxedFooter = true
+        return this
+    }
+
+
+    noBoxedFooter() {
+        this.options.boxedFooter = false
+        return this
+    }
+
+
 
 }
 
