@@ -89,7 +89,10 @@ class Log {
 
         for (var line of lines){
             if (line === '') line = ' '
-            console.log(`${preLine.join(' ')}${this._getChalkColor(line, this.options.baseMessageColor)}`)
+          
+            if (typeof line === 'object') console.log(preLine.join(' '), line)
+            else console.log(`${preLine.join(' ')}${this._getChalkColor(line, this.options.baseMessageColor)}`)
+            
         } 
           
         this.resetLogValues()
@@ -97,122 +100,80 @@ class Log {
         return this
     }
 
-    // paragraph(options) {
-    //     return new Paragraph(this, options)
-    // }
+
+    // change setDefaults to keep from resting values
+    // setDefaults
 
 
-    // /**
-    //  * Log a message to the console without a timestamp and or label.
-    //  * 
-    //  * @param {string} message Message
-    //  * @returns FLogs
-    //  */
-    // raw(message) {
-    //     if (this.options.hide) return
-    //     if (!message) message = ' '
-    //     console.log(message)
-    //     return this
-    // }
+    /**
+     * Log a message to the console without a timestamp and or label.
+     * 
+     * @param {string} message Message
+     * @returns FLogs
+     */
+    raw(message) {
+        if (this.options.hide) return
+        if (!message) message = ' '
+        console.log(message)
+        return this
+    }
 
-    // /**
-    //  * Log a **INFO** message to the console with a timestamp and a pre-made and label. 
-    //  * 
-    //  *  HH:mm:ss [INFO] message
-    //  * 
-    //  *              white
-    //  * @param {string} message Message
-    //  * @returns FLogs
-    //  */
-    // info(message) {
-    //     this.log(message, 'INFO', 'white')
-    //     return this
-    // }
+    /**
+     * Log a **INFO** message to the console with a timestamp and a pre-made and label. 
+     * 
+     *  HH:mm:ss [INFO] message
+     * 
+     *              white
+     * @param {string} message Message
+     * @returns FLogs
+     */
+    info(message) {
+        this.log(message, 'INFO', 'white')
+        return this
+    }
 
-    // /**
-    //  * Log a **WARN** message to the console with a timestamp and a pre-made and label. 
-    //  * 
-    //  *  HH:mm:ss [WARN] message
-    //  * 
-    //  *             yellow
-    //  * @param {string} message Message
-    //  * @returns FLogs
-    //  */
-    // warn(message) {
-    //     this.log(message, 'WARN', 'yellow')
-    //     return this
-    // }
+    /**
+     * Log a **WARN** message to the console with a timestamp and a pre-made and label. 
+     * 
+     *  HH:mm:ss [WARN] message
+     * 
+     *             yellow
+     * @param {string} message Message
+     * @returns FLogs
+     */
+    warn(message) {
+        this.log(message, 'WARN', 'yellow')
+        return this
+    }
 
-    // /**
-    //  * Log a **error** message to the console with a timestamp and a pre-made and label. 
-    //  * 
-    //  *  HH:mm:ss [error] message
-    //  * 
-    //  *              red
-    //  * @param {string} message Message
-    //  * @returns FLogs
-    //  */
-    // error(message) {
-    //     this.log(message, 'error', 'red')
-    //     return this
-    // }
+    /**
+     * Log a **error** message to the console with a timestamp and a pre-made and label. 
+     * 
+     *  HH:mm:ss [error] message
+     * 
+     *              red
+     * @param {string} message Message
+     * @returns FLogs
+     */
+    error(message) {
+        this.log(message, 'error', 'red')
+        return this
+    }
 
-    // /**
-    //  * Logs a blank line.
-    //  * @returns FLogs
-    //  */
-    // white() {
-    //     this.raw(" ")
-    //     return this
-    // }
+    /**
+     * Logs a blank line.
+     * @returns FLogs
+     */
+    white() {
+        console.log(' ')
+        return this
+    }
 
-    // /**
-    //  * Log a console.Table() to the console with a timestamp. 
-    //  * 
-    //  * @param {Array | string} values Array of values
-    //  * @param {object} properties Properties 
-    //  * @returns FLogs
-    //  */
-    // table(values = [], properties) {
-    //     if (this.options.hide) return
-    //     console.log(`------${this.createTimeStamp()}------`)
-    //     if (!Array.isArray(values)) {
-    //         values = [values]
-    //     }
-    //     console.table([...values], properties)
-    //     return this
-    // }
 
-    // /**
-    //  * Logs a timeStamp.
-    //  * @returns FLogs
-    //  */
-    // timeStamp() {
-    //     this.log()
-    //     return this
-    // }
-    // /**
-    //  * Logs a label.
-    //  * 
-    //  * @param {string} name 
-    //  * @param {string | object} color 
-    //  * @returns FLogs
-    //  */
-    // label(name, color) {
-    //     this.raw(this.createLabel(name, color))
-    //     return this
-    // }
-
-    // /**
-    //  * Log a newLine with out a timestamp.
-    //  * 
-    //  * HH:mm:ss [INFO] Message
-    //  *  
-    //  *             NewLine
-    //  *             messages
-    //  * @param {string} message Message
-    //  * @returns FLogs
-    //  */
+    debug(message){
+        this.log(message, 'DEBUG', 'white')
+        return this
+    }
 
     newLine(message, spacing) {
         var outSpacing = ''
