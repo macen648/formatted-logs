@@ -6,22 +6,72 @@ Flogs was built for my package [DCHandler.js](https://nodei.co/npm/dchandler.js)
 
 ## TimeStamp and label structure
 ```
-HH:mm:ss message
-HH:mm:ss [label] message
+message
+prefix HH:mm:ss [label] message
 ```
 
 FLogs is using dayjs for timeStamps
 
 See dayjs .format() documentation for more information on timeStamp structure.
 
-Time structure can be changed using .addOptions({timeStruct: "struct"})
+Time structure can be changed using .addOptions({timeStampStructure: "HH:mm:ss"})
 
-or setTimeStruct("struct")
+or timeStampStructure("HH:mm:ss")
+
+
+## Colors
+All sections of the log can be colored
+
+The color argument(s) accepts Hex, HTML color names, and rgb objects.
+
+(Example)
+red:
+- #FF0000
+- red
+- {r: 255, g:0, b:0}
+
+```js
+FLogs.log('message', 'Label', 'color')
+FLogs.labelColor('color').log('message', 'Label')
+
+FLogs
+     .prefixColor('color')
+     .timeStampColor('color')
+     .labelColor('color')
+     .messageColor('color')
+
+FParagraph
+     .titleColor('color')
+     .bodyColor('color')
+     .footerColor('color')
+
+// All red
+FLogs.log('message', 'Label', '#FF0000')
+FLogs.log('message', 'Label', 'red')
+FLogs.log('message', 'Label', {r: 255, g:0, b:0})
+FLogs.labelColor('red').log('message', 'Label')
+FParagraph.title('Label', 'red', true)
+FParagraph
+     .boxedTitle()
+     .titleColor('red')
+     .title('Label')
+
+// HH:mm:ss [Label] message
+// HH:mm:ss [Label] message
+// HH:mm:ss [Label] message
+// HH:mm:ss [Label] message
+// HH:mm:ss [Label] message
+// HH:mm:ss [Label] message
+
+```
 
 ## Options
-- hide  : Default false
-- timeStruct  : Default 'HH:mm:ss'
-- boxedLabels  : Default true
+- hide = false
+- boxedLabels = true
+- timeStamp = true
+- boxedTimeStamp = false
+- timeStampStructure = 'HH:mm:ss'
+
 
 ## Simple examples
 ```js
@@ -34,54 +84,33 @@ FLogs.log('just text', 'Label', 'white')
 FLogs.info('just info')
 // HH:mm:ss [INFO] just info
 
-FLogs.paragraph()
-     .header('FLogs.paragraph')
+FLogs.prefix('prefix:').log('just text', 'Label', 'white')
+// prefix: HH:mm:ss [Label] just info
+
+FParagraph
+     .title('FLogs.paragraph')
      .body(`this is a body paragraph\nthis is another body paragraph`)
 
 // HH:mm:ss FLogs.paragraph
 //          this is a body paragraph 
 //          this is another body paragraph
 
-FLogs.paragraph()
-     .Label()
-     .header('FLogs.paragraph')
+FParagraph
+     .boxedTitle()
+     .title('FLogs.paragraph')
      .body(`this is a body paragraph \nthis is another body paragraph`)
+// HH:mm:ss [FLogs.paragraph]
+//          this is a body paragraph 
+//          this is another body paragraph
 
+FParagraph
+     .title('FLogs.paragraph', '', true)
+     .body(`this is a body paragraph \nthis is another body paragraph`)
 // HH:mm:ss [FLogs.paragraph]
 //          this is a body paragraph 
 //          this is another body paragraph
 
 ```
-
-## colors
-```js
-FLogs.log('message', 'Label', 'color')
-```
-
-The color argument accepts Hex, HTML color names, and rgb objects.
-
-```js
-// All red
-FLogs.log('message', 'Label', '#FF0000')
-FLogs.log('message', 'Label', 'red')
-FLogs.log('message', 'Label', {r: 255, g:0, b:0})
-FLogs.paragraph()
-     .Label('red')
-     .header('Label')
-
-// HH:mm:ss [Label] message
-// HH:mm:ss [Label] message
-// HH:mm:ss [Label] message
-// HH:mm:ss [Label] message
-
-```
-
-## test.js
-For Examples of all functions:
-
-See \_test\_/logs.test.js for log examples.
-
-See \_test\_/paragraph.test.js for paragraph examples.
 
 ## Me
  - Discord: macen#0001

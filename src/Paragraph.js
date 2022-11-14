@@ -18,6 +18,7 @@ class Paragraph {
 
     setDefaults() {
         this.options.timeStamp = true
+        this.options.hide = false
 
         this.options.titleColor = '#ccc'
         this.options.boxedTitle = false
@@ -54,6 +55,18 @@ class Paragraph {
         return this
     }  
 
+
+    hide() {
+        this.options.hide = true
+        return this
+    }
+    
+    unHide() {
+        this.options.hide = false
+        return this
+    }
+
+
     /**
      * Turns off timestamps.
      * 
@@ -89,6 +102,7 @@ class Paragraph {
      * @returns Paragraph
      */
     title(title, color, boxed) {
+        if (this.options.hide == true) return this
 
         if (title) this.Log.label(title).noBoxedLabel()
          
@@ -127,6 +141,7 @@ class Paragraph {
      * @returns Paragraph
      */
     body(paragraph, color, indent){
+        if (this.options.hide == true) return this
 
         if (color) this.options.bodyColor = color
         if (indent == false ) this.options.indent = false
@@ -164,6 +179,7 @@ class Paragraph {
      * @returns Paragraph
      */
     footer(footer, color, boxed) {
+        if (this.options.hide == true) return this
 
         if (footer) this.Log.label(footer).noBoxedLabel()  
     

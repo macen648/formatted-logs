@@ -27,6 +27,8 @@ class Log {
     }  
 
     setDefaults() {
+        this.options.hide = false
+
         this.options.baseMessage = ' '
         this.options.baseMessageColor = '#ccc'
 
@@ -59,6 +61,15 @@ class Log {
     }
 
 
+    hide(){
+        this.options.hide = true
+        return this
+    }
+    
+    unHide(){
+        this.options.hide = false
+        return this
+    }
     /**
      * Log a message to the console with a timestamp and optionally a label.
      * 
@@ -72,6 +83,7 @@ class Log {
      * @returns Log
      */
     log(message, label, color){
+        if (this.options.hide == true) return this
         if (!message) message = this.options.baseMessage
         if (label) this.label(label)
         if (color) this.labelColor(color)
@@ -112,7 +124,7 @@ class Log {
      * @returns FLogs
      */
     raw(message) {
-        if (this.options.hide) return
+        if (this.options.hide == true) return this
         if (!message) message = ' '
         console.log(message)
         return this
@@ -164,7 +176,8 @@ class Log {
      * Logs a blank line.
      * @returns FLogs
      */
-    white() {
+    white(){
+        if (this.options.hide == true) return this
         console.log(' ')
         return this
     }
