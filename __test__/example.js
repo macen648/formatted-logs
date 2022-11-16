@@ -1,4 +1,4 @@
-const { FLogs, FParagraph } = require('../index')
+const { FLogs, FParagraph} = require('../index')
 FLogs.noBoxedLabel()
 
 const result = process.argv[2]

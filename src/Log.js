@@ -8,58 +8,72 @@ class Log {
     constructor(options = {}){
         
         this.options = {}
+        this.Defaults()
 
-        this.setDefaults()
-
-        this.setOptions(options)
+        this.forced = []
+        this.Forced()
+        
+        this.addOptions(options)
     }
 
-    /**
- * Add option(s) to options.
- *
- * @param {object | any} [options] Option(s)
- *
- * @returns Log
- */
-    setOptions(options) {
-        this.options = { ...this.options, ...options }
-        return this
-    }  
-
-    setDefaults() {
+    Defaults() {
         this.options.hide = false
 
         this.options.baseMessage = ' '
         this.options.baseMessageColor = '#ccc'
-
+        
         this.options.boxedLabels = true
         this.options.labelText = undefined
         this.options.labelTextColor = '#ccc'
-
+        
         this.options.prefixText = undefined
         this.options.prefixTextColor = '#ccc'
-
+        
         this.options.timeStamp = true
         this.options.boxedTimeStamp = false
         this.options.timeStampStructure = 'HH:mm:ss'
         this.options.timeStampTextColor = '#ccc'
-
-        this.options.newLineColor = '#ccc'
+        
+        this.options.newLineColor = this.options.baseMessageColor
+        return this
     }
 
-    resetLogValues() {
-        this.options.baseMessage = ' '
-        this.options.baseMessageColor = '#ccc'
-
-        this.options.labelText = undefined
-        this.options.labelTextColor = '#ccc'
-
-        this.options.prefixText = undefined
-        this.options.prefixTextColor = '#ccc'
-
-        this.options.timeStampTextColor = '#ccc'
+    resetDefaults(){
+        this.Defaults()
+        return this
     }
 
+    Forced(){
+        this.forced.baseMessageColor = undefined
+        this.forced.labelTextColor = undefined
+        this.forced.prefixTextColor = undefined
+        this.forced.timeStampTextColor = undefined
+        this._resetLog()
+        return this
+    }
+
+    resetForced(){
+        this.Forced()
+        return this
+    }
+
+    /**
+    * Add option(s) to options.
+    *
+    * @param {object | any} [options] Option(s)
+    *
+    * @returns Log
+    */
+    addOptions(options) {
+        this.options = { ...this.options, ...options }
+        return this
+    }
+
+    forceDefaults(forced) {
+        this.options = { ...this.options, ...forced }
+        this.forced = { ...this.forced, ...forced }
+        return this
+    }
 
     hide(){
         this.options.hide = true
@@ -107,15 +121,10 @@ class Log {
             
         } 
           
-        this.resetLogValues()
+        this._resetLog()
 
         return this
     }
-
-
-    // change setDefaults to keep from resting values
-    // setDefaults
-
 
     /**
      * Log a message to the console without a timestamp and or label.
@@ -185,6 +194,11 @@ class Log {
 
     debug(message){
         this.log(message, 'DEBUG', 'white')
+        return this
+    }
+
+    here(){
+        this.log('here')
         return this
     }
 
@@ -334,6 +348,31 @@ class Log {
 
         return this._getChalkColor(TimeStamp, this.options.timeStampTextColor)
     }
+
+    _resetLog() {
+        this.options.baseMessage = ' '
+        if (this.forced.baseMessageColor !== undefined) {
+            this.options.baseMessageColor = this.forced.baseMessageColor
+            this.options.newLineColor = this.forced.baseMessageColor
+        } else {
+            this.options.newLineColor = '#ccc'
+            this.options.baseMessageColor = '#ccc'
+        }
+
+        this.options.labelText = undefined
+        if (this.forced.labelTextColor !== undefined) this.options.labelTextColor = this.forced.labelTextColor
+        else this.options.labelTextColor = '#ccc'
+
+        this.options.prefixText = undefined
+        if (this.forced.prefixTextColor !== undefined) this.options.prefixTextColor = this.forced.prefixTextColor
+        else this.options.prefixTextColor = '#ccc'
+
+        if (this.forced.timeStampTextColor !== undefined) this.options.timeStampTextColor = this.forced.timeStampTextColor
+        else this.options.timeStampTextColor = '#ccc'
+
+        return this
+    }
+
 }
 
 module.exports = Log
