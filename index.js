@@ -1,23 +1,28 @@
 const Log = require('./src/Log')
-const FLog = new Log()
+const FLogs = new Log()
 const Paragraph = require('./src/Paragraph')
+const FParagraph = new Paragraph()
+
+const colorNameToHex = require('./src/utils/colorNameToHex')
+const splitNewLine = require('./src/utils/splitNewLine')
 
 module.exports = {
-    FLogs: FLog,
+    FLogs: FLogs,
     BaseLog: Log,
-    FParagraph: new Paragraph(),
-    BaseParagraph: Paragraph ,
+    FParagraph: FParagraph,
+    BaseParagraph: Paragraph,
+
     //Escaped functions
     log: (message, label, color) => {
-        FLog.log(message, label, color)
-        return FLog
+        FLogs.log(message, label, color)
+        return FLogs
     },
     here: () => {
-        FLog.here()
-        return FLog
+        FLogs.here()
+        return FLogs
     },
 
     //utils
-    colorNameToHex: require('./src/utils/colorNameToHex'),
-    splitNewLine: require('./src/utils/splitNewLine'),
+    colorNameToHex: colorNameToHex,
+    splitNewLine: splitNewLine,
 }

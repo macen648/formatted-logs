@@ -198,7 +198,7 @@ class Log {
     }
 
     here(){
-        this.log('here')
+        this.log('Here!')
         return this
     }
 

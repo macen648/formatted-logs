@@ -31,6 +31,8 @@ red:
 - {r: 255, g:0, b:0}
 
 ```js
+const { FLogs, FParagraph } = require('formatted-logs')
+
 FLogs.log('message', 'Label', 'color')
 FLogs.labelColor('color').log('message', 'Label')
 
@@ -72,9 +74,13 @@ FParagraph
 - boxedTimeStamp = false
 - timeStampStructure = 'HH:mm:ss'
 
+## force
 
 ## Simple examples
 ```js
+
+const { FLogs } = require('formatted-logs')
+
 FLogs.log('just text')
 // HH:mm:ss just text
 
@@ -86,6 +92,18 @@ FLogs.info('just info')
 
 FLogs.prefix('prefix:').log('just text', 'Label', 'white')
 // prefix: HH:mm:ss [Label] just info
+
+const { log, here } = require('formatted-logs')
+
+log('just text') // Escaped log function, Using same options as default FLogs instance.
+// HH:mm:ss just text
+
+here() // Useful for debugging
+// HH:mm:ss Here!
+
+const { FParagraph } = require('formatted-logs')
+
+// FParagraph contains its own FLogs instance, options for base FParagraph and Base FLogs instance do not transfer. 
 
 FParagraph
      .title('FLogs.paragraph')

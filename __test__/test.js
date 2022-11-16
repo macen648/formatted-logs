@@ -1,4 +1,5 @@
-const {FLogs, FParagraph, here, log } = require('../index')
+//const {FLogs, FParagraph, here, log } = require('../index')
+const { FLogs, here, log } = require('../index')
 
 FLogs.debug('debug')
 FLogs.raw('raw')
