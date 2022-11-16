@@ -75,6 +75,29 @@ FParagraph
 - timeStampStructure = 'HH:mm:ss'
 
 ## force
+Any Forced colors will override the default value of '#ccc'.
+- baseMessageColor = undefined
+- labelTextColor = undefined
+- prefixTextColor = undefined
+- timeStampTextColor = undefined
+
+Example:
+```js
+
+FLogs.log('just text', 'Label')
+// HH:mm:ss [Label] just text
+//            ^^^
+// Label is the color of white
+
+Flogs.forceDefaults({labelTextColor: 'red'})
+
+FLogs.log('just text', 'Label')
+// HH:mm:ss [Label] just text
+//            ^^^
+// Label is now the color of red
+
+```
+
 
 ## Simple examples
 ```js
