@@ -31,7 +31,7 @@ red:
 - {r: 255, g:0, b:0}
 
 ```js
-const { FLogs, FParagraph } = require('formatted-logs')
+import FLogs, { FParagraph } from '../formatted-logs'
 
 FLogs.log('message', 'Label', 'color')
 FLogs.labelColor('color').log('message', 'Label')
@@ -47,7 +47,7 @@ FParagraph
      .bodyColor('color')
      .footerColor('color')
 
-// All red
+
 FLogs.log('message', 'Label', '#FF0000')
 FLogs.log('message', 'Label', 'red')
 FLogs.log('message', 'Label', {r: 255, g:0, b:0})
@@ -58,6 +58,7 @@ FParagraph
      .titleColor('red')
      .title('Label')
 
+// All red labels
 // HH:mm:ss [Label] message
 // HH:mm:ss [Label] message
 // HH:mm:ss [Label] message
@@ -75,7 +76,7 @@ FParagraph
 - timeStampStructure = 'HH:mm:ss'
 
 ## force
-Any Forced colors will override the default value of '#ccc'.
+Any forced colors will override the default value of '#ccc'.
 - baseMessageColor = undefined
 - labelTextColor = undefined
 - prefixTextColor = undefined
@@ -83,6 +84,7 @@ Any Forced colors will override the default value of '#ccc'.
 
 Example:
 ```js
+import FLogs from '../formatted-logs'
 
 FLogs.log('just text', 'Label')
 // HH:mm:ss [Label] just text
@@ -101,8 +103,7 @@ FLogs.log('just text', 'Label')
 
 ## Simple examples
 ```js
-
-const { FLogs } = require('formatted-logs')
+import FLogs from '../formatted-logs'
 
 FLogs.log('just text')
 // HH:mm:ss just text
@@ -116,7 +117,7 @@ FLogs.info('just info')
 FLogs.prefix('prefix:').log('just text', 'Label', 'white')
 // prefix: HH:mm:ss [Label] just info
 
-const { log, here } = require('formatted-logs')
+import { log, here } from '../formatted-logs'
 
 log('just text') // Escaped log function, Using same options as default FLogs instance.
 // HH:mm:ss just text
@@ -124,7 +125,7 @@ log('just text') // Escaped log function, Using same options as default FLogs in
 here() // Useful for debugging
 // HH:mm:ss Here!
 
-const { FParagraph } = require('formatted-logs')
+import { FParagraph } from '../formatted-logs'
 
 // FParagraph contains its own FLogs instance, options for base FParagraph and Base FLogs instance do not transfer. 
 
