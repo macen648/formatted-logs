@@ -1,28 +1,31 @@
-const Log = require('./src/Log')
-const FLogs = new Log()
-const Paragraph = require('./src/Paragraph')
-const FParagraph = new Paragraph()
+// Custom Console logs ;)
+import Logger from './src/Logger.js'
+import Paragraph from './src/Paragraph.js'
+import colorNameToHex from './src/utils/colorNameToHex.js'
+import splitNewLine from './src/utils/splitNewLine.js'
 
-const colorNameToHex = require('./src/utils/colorNameToHex')
-const splitNewLine = require('./src/utils/splitNewLine')
+const FLogs = new Logger()
 
-module.exports = {
-    FLogs: FLogs,
-    BaseLog: Log,
-    FParagraph: FParagraph,
-    BaseParagraph: Paragraph,
+//Flogs
+export default FLogs
+export const BaseLogger = Logger
 
-    //Escaped functions
-    log: (message, label, color) => {
+//Paragraph
+export const FParagraph = new Paragraph()
+export const BaseParagraph = Paragraph
+
+//utils
+export { colorNameToHex }
+export { splitNewLine } 
+
+//Escaped functions
+export function log(message, label, color) {
         FLogs.log(message, label, color)
         return FLogs
-    },
-    here: () => {
+    }
+
+export function here() {
         FLogs.here()
         return FLogs
-    },
+    }
 
-    //utils
-    colorNameToHex: colorNameToHex,
-    splitNewLine: splitNewLine,
-}

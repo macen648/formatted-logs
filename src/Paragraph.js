@@ -1,17 +1,12 @@
-const Log = require('./Log')
+import Log from './Logger.js'
 
-class Paragraph {
-    /**
-     * Create a new paragraph.
-     * 
-     * @param {string} name Title
-     */
+export default class Paragraph {
     constructor(options = {}) {
         this.options = {}
        
         this.setDefaults()
 
-        this.setOptions(options)
+        this.addOptions(options)
         
         this.Log = new Log(this.options)
     }
@@ -28,6 +23,7 @@ class Paragraph {
 
         this.options.footerColor = '#ccc'
         this.options.boxedFooter = false
+        return this
     }
 
     resetValues() {
@@ -43,18 +39,10 @@ class Paragraph {
         return this
     }
 
-    /**
-     * Add option(s) to options.
-     *
-     * @param {object | any} [options] Option(s)
-     *
-     * @returns Paragraph
-     */
-    setOptions(options) {
+    addOptions(options) {
         this.options = { ...this.options, ...options }
         return this
     }  
-
 
     hide() {
         this.options.hide = true
@@ -66,23 +54,41 @@ class Paragraph {
         return this
     }
 
+    timeStamp(color) {
+        this.options.timeStamp = true
+        this.Log.timeStamp(color)
+        return this
+    }
 
-    /**
-     * Turns off timestamps.
-     * 
-     * @returns Paragraph
-     */
     noTimeStamp(){ 
         this.options.timeStamp = false
         this.Log.noTimeStamp()
         return this 
     }
 
-    timeStamp(){
-        this.options.timeStamp = true
-        this.Log.timeStamp()
+    noBoxedTimeStamp() {
+        this.options.boxedTimeStamp = false
+        this.Log.noBoxedTimeStamp()
         return this
     }
+
+    boxedTimeStamp() {
+        this.options.boxedTimeStamp = true
+        this.Log.boxedTimeStamp()
+        return this
+    }
+
+    timeStampStruct(struct) {
+        if (struct) this.options.timeStampStructure = struct
+        this.Log.timeStampStruct(struct)
+        return this
+    }
+
+    timeStampColor(color) {
+        this.options.timeStampTextColor = color
+        this.Log.timeStampColor(color)
+        return this
+    } 
 
     boxed(){
         this.boxedTitle()
@@ -96,11 +102,6 @@ class Paragraph {
         return this
     }
 
-    /**
-     * Title of the paragraph.
-     * @param {string} title Title 
-     * @returns Paragraph
-     */
     title(title, color, boxed) {
         if (this.options.hide == true) return this
 
@@ -134,12 +135,6 @@ class Paragraph {
         return this
     }
 
-    /**
-     * The body of the paragraph.
-     * 
-     * @param {string} paragraph Paragraph
-     * @returns Paragraph
-     */
     body(paragraph, color, indent){
         if (this.options.hide == true) return this
 
@@ -172,12 +167,6 @@ class Paragraph {
         return this
     }
 
-
-    /**
-     * Footer of the paragraph.
-     * @param {string} footer Footer title
-     * @returns Paragraph
-     */
     footer(footer, color, boxed) {
         if (this.options.hide == true) return this
 
@@ -206,15 +195,12 @@ class Paragraph {
         return this
     }
 
-
     noBoxedFooter() {
         this.options.boxedFooter = false
         return this
     }
 
-
-
 }
 
-module.exports = Paragraph
+
 

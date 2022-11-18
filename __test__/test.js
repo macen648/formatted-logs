@@ -1,5 +1,4 @@
-//const {FLogs, FParagraph, here, log } = require('../index')
-const { FLogs, here, log } = require('../index')
+import FLogs, { here, log } from '../index.js'
 
 FLogs.debug('debug')
 FLogs.raw('raw')
@@ -8,4 +7,5 @@ FLogs.warn('warn')
 FLogs.error('error')
 
 here()
-log('het')
+log('log')
+

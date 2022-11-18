@@ -1,4 +1,5 @@
-const { FLogs, FParagraph} = require('../index')
+import FLogs, { FParagraph } from '../index.js'
+
 FLogs.noBoxedLabel()
 
 const result = process.argv[2]
@@ -9,5 +10,5 @@ FParagraph.title('Input2:', 'lightblue')
           .body(result2)
 
 FParagraph.title('FLogs.paragraph', 'lightblue', true)
-    .body(`this is a body paragraph \nthis is another body paragraph`)
+          .body(`this is a body paragraph \nthis is another body paragraph`)
 

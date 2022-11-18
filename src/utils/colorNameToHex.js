@@ -25,5 +25,8 @@ const colorsToHex = {
     "yellow": "#ffff00", "yellowgreen": "#9acd32"
 }
 
-module.exports = colorNameToHex = (color) => { return colorsToHex[color.toLowerCase()] ? colorsToHex[color.toLowerCase()] : false }
+export default function colorNameToHex (color) { 
+    if(typeof color !== "string") return false
+    return colorsToHex[color.toLowerCase()] ? colorsToHex[color.toLowerCase()] : false 
+}
 

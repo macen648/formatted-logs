@@ -1,9 +1,9 @@
 {
   "name": "formatted-logs",
   "description": "Time-stamped and labeled Console.logs.",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "main": "index.js",
-  "scripts": {},
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/macen648/formatted-logs"
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/macen648/formatted-logs#README",
   "dependencies": {
-    "chalk": "^4.1.1",
+    "chalk": "^5.1.2",
     "dayjs": "^1.11.6"
   }
 }

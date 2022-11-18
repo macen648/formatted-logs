@@ -1,10 +1,9 @@
-// Custom Console logs ;)
-const dayjs = require('dayjs')
-const chalk = require('chalk')
-const colorNameToHex = require('./utils/colorNameToHex')
-const splitNewLine = require('./utils/splitNewLine')
+import dayjs from 'dayjs'
+import chalk from 'chalk'
+import colorNameToHex from './utils/colorNameToHex.js'
+import splitNewLine from './utils/splitNewLine.js'
 
-class Log {
+export default class Log {
     constructor(options = {}){
         
         this.options = {}
@@ -57,13 +56,6 @@ class Log {
         return this
     }
 
-    /**
-    * Add option(s) to options.
-    *
-    * @param {object | any} [options] Option(s)
-    *
-    * @returns Log
-    */
     addOptions(options) {
         this.options = { ...this.options, ...options }
         return this
@@ -84,18 +76,7 @@ class Log {
         this.options.hide = false
         return this
     }
-    /**
-     * Log a message to the console with a timestamp and optionally a label.
-     * 
-     *  HH:mm:ss message
-     * 
-     *  HH:mm:ss [label] message
-     * 
-     * @param {string} message Message
-     * @param {string} [label] Label
-     * @param {string | object} [color] Label-Color
-     * @returns Log
-     */
+
     log(message, label, color){
         if (this.options.hide == true) return this
         if (!message) message = this.options.baseMessage
@@ -126,12 +107,6 @@ class Log {
         return this
     }
 
-    /**
-     * Log a message to the console without a timestamp and or label.
-     * 
-     * @param {string} message Message
-     * @returns FLogs
-     */
     raw(message) {
         if (this.options.hide == true) return this
         if (!message) message = ' '
@@ -139,58 +114,26 @@ class Log {
         return this
     }
 
-    /**
-     * Log a **INFO** message to the console with a timestamp and a pre-made and label. 
-     * 
-     *  HH:mm:ss [INFO] message
-     * 
-     *              white
-     * @param {string} message Message
-     * @returns FLogs
-     */
     info(message) {
         this.log(message, 'INFO', 'white')
         return this
     }
 
-    /**
-     * Log a **WARN** message to the console with a timestamp and a pre-made and label. 
-     * 
-     *  HH:mm:ss [WARN] message
-     * 
-     *             yellow
-     * @param {string} message Message
-     * @returns FLogs
-     */
     warn(message) {
         this.log(message, 'WARN', 'yellow')
         return this
     }
 
-    /**
-     * Log a **error** message to the console with a timestamp and a pre-made and label. 
-     * 
-     *  HH:mm:ss [error] message
-     * 
-     *              red
-     * @param {string} message Message
-     * @returns FLogs
-     */
     error(message) {
         this.log(message, 'error', 'red')
         return this
     }
 
-    /**
-     * Logs a blank line.
-     * @returns FLogs
-     */
     white(){
         if (this.options.hide == true) return this
         console.log(' ')
         return this
     }
-
 
     debug(message){
         this.log(message, 'DEBUG', 'white')
@@ -218,76 +161,10 @@ class Log {
 
     newLineColor(color){
         this.options.newLineColor = color
-    }
-
-    _getChalkColor(string, color){ 
-        if (!string) return 
-        if (!color) return chalk.hex('#ccc')(string)
-        if (color === undefined) return chalk.hex('#ccc')(string)
-        if (typeof color === 'object') return chalk.rgb(color.r, color.g, color.b)(string)
-        if (color.startsWith("#")) return chalk.hex(color)(string)
-        if (colorNameToHex(color) != false) return chalk.hex(colorNameToHex(color))(string)
-        return chalk.hex('#ccc')(string)
-    }
-
-//message
-    message(message, color){
-        if (message) this.options.baseMessage = message
-        if (color) this.messageColor(color)
         return this
     }
 
-    messageColor(color){       
-        this.options.baseMessageColor = color
-        return this
-    }
-
-    noMessage(){
-        this.options.baseMessage = ' ' 
-        return this
-    }
-
-//label
-    label(text, color){
-        if (text) this.options.labelText = text
-        if (color) this.labelColor(color)
-        return this
-    }
-
-    labelColor(color){
-        this.options.labelTextColor = color
-        return this
-    }
-
-    boxedLabel() {
-        this.options.boxedLabels = true
-        return this
-    }
-
-    noBoxedLabel() {
-        this.options.boxedLabels = false
-        return this
-    }
-
-    _createLabel() {
-        const labelArr = []
-        if (!Array.isArray(this.options.labelText)) this.options.labelText = [this.options.labelText]
-        if (!Array.isArray(this.options.labelTextColor)) this.options.labelTextColor = [this.options.labelTextColor]
-           
-        var colorIndex = 1     
-        for (const Label of this.options.labelText) {
-            var LabelText = Label
-            var LabelTextColor = this.options.labelTextColor[colorIndex - 1]
-            if (LabelTextColor === undefined) LabelTextColor = this.options.labelTextColor[0]
-            if (this.options.boxedLabels == true) LabelText = `[${Label}]`
-            labelArr.push(this._getChalkColor(LabelText, LabelTextColor))
-            colorIndex++
-        }
-        if (this.options.boxedLabels == false) return labelArr.join(' ')
-        return labelArr.join('')
-    }
-
-//Prefix
+// Prefix
     prefix(text, color){
         if (text) this.options.prefixText = text
         if (color) this.prefixColor(color)
@@ -308,7 +185,7 @@ class Log {
         return this._getChalkColor(this.options.prefixText, this.options.prefixTextColor)
     }
 
-//TimeStamp
+// TimeStamp
     timeStamp(color){
         this.options.timeStamp = true
         if (color) this.timeStampColor(color)
@@ -349,6 +226,79 @@ class Log {
         return this._getChalkColor(TimeStamp, this.options.timeStampTextColor)
     }
 
+// Label
+    label(text, color) {
+        if (text) this.options.labelText = text
+        if (color) this.labelColor(color)
+        return this
+    }
+
+    noLabel() {
+        this.options.labelText = undefined
+        return this
+    }
+
+    labelColor(color) {
+        this.options.labelTextColor = color
+        return this
+    }
+
+    boxedLabel() {
+        this.options.boxedLabels = true
+        return this
+    }
+
+    noBoxedLabel() {
+        this.options.boxedLabels = false
+        return this
+    }
+
+    _createLabel() {
+        const labelArr = []
+        if (!Array.isArray(this.options.labelText)) this.options.labelText = [this.options.labelText]
+        if (!Array.isArray(this.options.labelTextColor)) this.options.labelTextColor = [this.options.labelTextColor]
+
+        var colorIndex = 1
+        for (const Label of this.options.labelText) {
+            var LabelText = Label
+            var LabelTextColor = this.options.labelTextColor[colorIndex - 1]
+            if (LabelTextColor === undefined) LabelTextColor = this.options.labelTextColor[0]
+            if (this.options.boxedLabels == true) LabelText = `[${Label}]`
+            labelArr.push(this._getChalkColor(LabelText, LabelTextColor))
+            colorIndex++
+        }
+        if (this.options.boxedLabels == false) return labelArr.join(' ')
+        return labelArr.join('')
+    }
+
+// Message
+    message(message, color) {
+        if (message) this.options.baseMessage = message
+        if (color) this.messageColor(color)
+        return this
+    }
+
+    messageColor(color) {
+        this.options.baseMessageColor = color
+        return this
+    }
+
+    noMessage() {
+        this.options.baseMessage = ' '
+        return this
+    }
+
+// Api private     
+    _getChalkColor(string, color) {
+        if (!string) return
+        if (!color) return chalk.hex('#ccc')(string)
+        if (color === undefined) return chalk.hex('#ccc')(string)
+        if (typeof color === 'object') return chalk.rgb(color.r, color.g, color.b)(string)
+        if (color.startsWith("#")) return chalk.hex(color)(string)
+        if (colorNameToHex(color) != false) return chalk.hex(colorNameToHex(color))(string)
+        return chalk.hex('#ccc')(string)
+    }
+
     _resetLog() {
         this.options.baseMessage = ' '
         if (this.forced.baseMessageColor !== undefined) {
@@ -374,5 +324,3 @@ class Log {
     }
 
 }
-
-module.exports = Log
